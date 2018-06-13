@@ -19,7 +19,7 @@ public class Boletin8_4 {
     public static void main(String[] args) {
         
         Programa8_4 p= new Programa8_4();
-        p.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        p.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         p.setSize(400, 430);
         p.setVisible(true);
         

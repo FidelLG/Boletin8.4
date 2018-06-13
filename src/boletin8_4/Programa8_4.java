@@ -10,7 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Scanner;
 import javax.swing.*;
 
 /**
@@ -44,6 +48,7 @@ public class Programa8_4 extends JFrame implements ItemListener, ActionListener 
     JMenuItem mnuGuardar, mnuVer, mnuReset, mnuSalir;
     JMenu mnuJuego;
     JMenuBar mnuMain;
+    int cont = 0;
 
     public Programa8_4() {
         super("Lotería");
@@ -111,6 +116,22 @@ public class Programa8_4 extends JFrame implements ItemListener, ActionListener 
         mnuMain = new JMenuBar();
         mnuMain.add(mnuJuego);
         this.setJMenuBar(mnuMain);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int res = JOptionPane.showConfirmDialog(null,
+                        "¿Quieres salir del prgrama?",
+                        "Salir del programa",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+
+                if (res == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                } else {
+                }
+            }
+        });
     }
 
     @Override
@@ -148,7 +169,7 @@ public class Programa8_4 extends JFrame implements ItemListener, ActionListener 
     @Override
     public void actionPerformed(ActionEvent ae) {
         int aleatorio;
-     
+
         if (ae.getSource() == btnAceptar) {
             while (numMaquina.size() < maximo) {
                 aleatorio = (int) (Math.random() * 49) + 1;
@@ -162,6 +183,7 @@ public class Programa8_4 extends JFrame implements ItemListener, ActionListener 
                         chkLoteria[pintar].setBackground(Color.red);
 
                     } else {
+                        cont = cont + 1;
                         chkLoteria[pintar].setBackground(Color.green);
                         break;
 
@@ -170,6 +192,7 @@ public class Programa8_4 extends JFrame implements ItemListener, ActionListener 
             }
             System.err.println(numMaquina);
             System.err.println(boxMaquina);
+            System.err.printf("Numeros acertados: %d\n", cont);
         }
 
         if (ae.getSource() == mnuReset) {
@@ -186,11 +209,18 @@ public class Programa8_4 extends JFrame implements ItemListener, ActionListener 
             }
 
         }
-        if(ae.getSource()==mnuGuardar){
-            GrabarRecord g=new GrabarRecord(this);
+        if (ae.getSource() == mnuGuardar) {
+            GrabarRecord g = new GrabarRecord(this);
             g.pack();
             g.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             g.setVisible(true);
+
+        }
+        if (ae.getSource() == mnuVer) {
+            VerRecord vr = new VerRecord(this);
+            vr.setBounds(5, 5, 200, 200);
+            vr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            vr.setVisible(true);
         }
 
     }
